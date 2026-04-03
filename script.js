@@ -217,3 +217,49 @@ function startCountdown() {
         secsElem.innerText = s.toString().padStart(2, '0');
     }, 1000);
 }
+
+// --- PAGE TRANSITION EFFECT --- //
+document.addEventListener('DOMContentLoaded', () => {
+    const slider = document.createElement('div');
+    slider.className = 'page-transition-slider';
+    slider.innerHTML = '<div style="color:white; font-size:32px; font-weight:900; font-style:italic;">HUNGLEPC<span style="color:#f53d2d">SHOP</span><div style="font-size:12px; font-weight:400; text-align:center; margin-top:5px; opacity:0.8; font-style:normal;">Đang tải dữ liệu...</div></div>';
+    document.body.appendChild(slider);
+    
+    // Uncover the page on load
+    requestAnimationFrame(() => {
+        setTimeout(() => {
+            slider.classList.add('uncover');
+        }, 50);
+    });
+
+    // Intercept navigation
+    document.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', (e) => {
+            const href = link.getAttribute('href');
+            // Valid internal links only
+            if (href && !href.startsWith('#') && !href.startsWith('javascript:')) {
+                if(link.target === '_blank') return;
+                
+                e.preventDefault();
+                
+                // Reset slider position to left instantly
+                slider.classList.remove('uncover');
+                slider.classList.add('cover-prepare');
+                
+                // Allow browser to apply the instant transform without transition
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        // Slide in to cover screen
+                        slider.classList.remove('cover-prepare');
+                        slider.classList.add('cover');
+                    });
+                });
+
+                // Navigate after animation finishes
+                setTimeout(() => {
+                    window.location.href = href;
+                }, 400); 
+            }
+        });
+    });
+});
