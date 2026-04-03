@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Xây Dựng Cấu Hình PC</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="overlay" id="overlay"></div>
+    <header>
+        <div class="tier-1"><div class="container tier-1-inner"><div class="tier-1-left"><a href="#"><i class='bx bx-map'></i> Hệ thống Showroom</a></div></div></div>
+        <div class="tier-2">
+            <div class="container tier-2-inner">
+                <div class="logo-box"><a href="index.html" class="logo">HUNGLEPC<span class="text-red">SHOP</span></a></div>
+                <div class="search-wrapper"><div class="search-box-2"><input type="text" id="searchInputHD" placeholder="Nhập tên linh kiện..."><button><i class='bx bx-search'></i></button></div></div>
+                <div class="header-icons">
+                    <div class="h-icon-box" id="authBtn"><i class='bx bx-user-circle'></i><div class="text"><span>Đăng nhập</span><b>Tài khoản</b></div></div>
+                    <div class="h-icon-box cart-wrap" id="cartOpenBtn"><i class='bx bx-cart'></i><span class="cart-badge" id="cartCount">0</span><div class="text"><span>Giỏ hàng</span><b>Của bạn</b></div></div>
+                </div>
+            </div>
+        </div>
+        <div class="tier-3">
+            <div class="container tier-3-inner">
+                <div class="mega-menu-wrapper"><div class="nav-menu-btn"><i class='bx bx-menu'></i> DANH MỤC SẢN PHẨM</div></div>
+                <ul class="top-nav-links"><li><a href="products.html"><i class='bx bxs-hot'></i> XẢ KHO</a></li><li><a href="build-pc.html" class="text-blue">XÂY DỰNG PC</a></li></ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="cart-sidebar" id="cartSidebar"><div class="cart-header"><h2>GIỎ HÀNG</h2><button id="cartCloseBtn" class="modal-close"><i class='bx bx-x'></i></button></div><div class="cart-items" id="cartItemsContainer"></div><div class="cart-footer"><div class="cart-total"><span>Tổng cộng:</span><span id="cartTotalPrice">0đ</span></div><button class="btn-primary" id="checkoutBtnMain">Thanh Toán Ngay</button></div></div>
+    
+    <div class="modal" id="authModal">
+        <button class="modal-close"><i class='bx bx-x'></i></button>
+        <h2>Đăng Nhập Khách Hàng</h2>
+        <form id="loginForm"><div class="form-group"><label>Tên đăng nhập</label><input type="text" id="loginUser" required></div><button type="submit" class="btn-primary" style="background:var(--primary-blue);">Đăng Nhập</button></form>
+    </div>
+
+    <!-- The Advanced THNS Modal -->
+    <div class="modal build-thns-modal" id="buildSelectorModal">
+        <div class="build-modal-header">
+            <h2 id="buildSelectorTitle" style="color:white; margin:0; padding:0; border:none; text-transform:none;">Chọn linh kiện</h2>
+            <input type="text" id="buildSearchInput" oninput="filterBuildList()" placeholder="Tìm kiếm sản phẩm">
+            <button class="modal-close" style="position:static; color:white;" onclick="closeBuildSelector()"><i class='bx bx-x'></i></button>
+        </div>
+        <div class="build-modal-body">
+            <div class="build-modal-filters">
+                <div class="filter-group" onclick="toggleFilter('brandFilterList')">Thương hiệu <i class='bx bx-chevron-down'></i></div>
+                <div id="brandFilterList" style="display:none; padding:10px 20px; background:#fafafa; border-bottom:1px solid #f5f5f5;">
+                    <div style="cursor:pointer; color:var(--text-main); font-size:13px; margin-bottom:5px;" onclick="selectFilterBrand('')">Tất cả</div>
+                    <div style="cursor:pointer; color:var(--text-main); font-size:13px; margin-bottom:5px;" onclick="selectFilterBrand('Intel')">Intel</div>
+                    <div style="cursor:pointer; color:var(--text-main); font-size:13px; margin-bottom:5px;" onclick="selectFilterBrand('AMD')">AMD</div>
+                    <div style="cursor:pointer; color:var(--text-main); font-size:13px; margin-bottom:5px;" onclick="selectFilterBrand('ASUS')">ASUS</div>
+                    <div style="cursor:pointer; color:var(--text-main); font-size:13px; margin-bottom:5px;" onclick="selectFilterBrand('NVIDIA')">NVIDIA</div>
+                    <div style="cursor:pointer; color:var(--text-main); font-size:13px; margin-bottom:5px;" onclick="selectFilterBrand('Corsair')">Corsair</div>
+                    <div style="cursor:pointer; color:var(--text-main); font-size:13px;" onclick="selectFilterBrand('MSI')">MSI</div>
+                </div>
+                <div class="filter-group" onclick="alert('Tính năng đang mô phỏng, vui lòng chọn Thương hiệu')">Chipset <i class='bx bx-chevron-down'></i></div>
+                <div class="filter-group" onclick="alert('Tính năng đang mô phỏng')">Chuẩn kích thước <i class='bx bx-chevron-down'></i></div>
+                <div class="filter-group" onclick="alert('Tính năng đang mô phỏng')">Socket <i class='bx bx-chevron-down'></i></div>
+                <div class="filter-group" onclick="alert('Tính năng đang mô phỏng')">Dòng Main <i class='bx bx-chevron-down'></i></div>
+                <div class="filter-group" onclick="alert('Tính năng đang mô phỏng')">Số khe ram <i class='bx bx-chevron-down'></i></div>
+                <div class="filter-group" onclick="alert('Tính năng đang mô phỏng')">Hỗ trợ RAM <i class='bx bx-chevron-down'></i></div>
+            </div>
+            <div class="build-modal-main">
+                <div class="selector-list" id="buildSelectorList" style="max-height:100%; overflow-y:visible; padding:0;"></div>
+            </div>
+        </div>
+    </div>
+
+    <main class="main-wrapper container">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <h2 style="color:var(--primary-blue); font-size:24px; font-weight:700;">XÂY DỰNG CẤU HÌNH MÁY TÍNH</h2>
+            <button style="background:white; border:1px solid var(--border-color); padding:8px 15px; border-radius:4px; font-weight:700; cursor:pointer;" onclick="location.reload()"><i class='bx bx-refresh'></i> Làm lại</button>
+        </div>
+
+        <div class="build-box">
+            <div class="build-row"><div class="build-left"><div class="build-icon"><i class='bx bx-chip'></i></div><div><div class="build-type">Vi xử lý (CPU)</div><div class="build-selected text-red" id="selected-cpu">Vui lòng chọn linh kiện</div></div></div><div class="build-right"><button class="build-btn" onclick="openBuildSelector('cpu')"><i class='bx bx-plus'></i> Chọn CPU</button></div></div>
+            <div class="build-row"><div class="build-left"><div class="build-icon"><i class='bx bx-square-rounded'></i></div><div><div class="build-type">Bo Mạch Chủ (Mainboard)</div><div class="build-selected text-red" id="selected-mb">Vui lòng chọn linh kiện</div></div></div><div class="build-right"><button class="build-btn" onclick="openBuildSelector('mb')"><i class='bx bx-plus'></i> Chọn Mainboard</button></div></div>
+            <div class="build-row"><div class="build-left"><div class="build-icon"><i class='bx bx-credit-card-front'></i></div><div><div class="build-type">VGA Card Đồ Họa</div><div class="build-selected text-red" id="selected-vga">Vui lòng chọn linh kiện</div></div></div><div class="build-right"><button class="build-btn" onclick="openBuildSelector('vga')"><i class='bx bx-plus'></i> Chọn VGA</button></div></div>
+            <div class="build-row"><div class="build-left"><div class="build-icon"><i class='bx bx-memory-card'></i></div><div><div class="build-type">RAM Bộ Nhớ</div><div class="build-selected text-red" id="selected-ram">Vui lòng chọn linh kiện</div></div></div><div class="build-right"><button class="build-btn" onclick="openBuildSelector('ram')"><i class='bx bx-plus'></i> Chọn RAM</button></div></div>
+        </div>
+
+        <div class="total-panel">
+            <div style="font-size:16px;">Chi Phí Tạm Tính:</div>
+            <div class="build-total" style="font-size:36px; color:var(--price-red); font-weight:700; margin-bottom:15px;">0đ</div>
+            <button class="btn-primary" style="width:250px; background:linear-gradient(180deg, #f53d2d, #f63); margin-left:auto; display:flex; align-items:center; justify-content:center; gap:10px; font-size:16px;" id="addAllBuildToCartBtn"><i class='bx bx-cart-add'></i> THÊM TẤT CẢ VÀO GIỎ</button>
+            <div style="font-size:12px; color:var(--text-muted); margin-top:5px;">Chưa bao gồm cước vận chuyển nếu có</div>
+        </div>
+    </main>
+
+    <footer><div class="container"><p>&copy; 2026 HUNGLEPCSHOP.</p></div></footer>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+    <script>
+        let buildPCSelection = { cpu: null, vga: null, ram: null, mb: null };
+        let currentPickingType = null;
+        let currentAvailItems = [];
+        let activeBrandFilter = '';
+        const buildModal = document.getElementById('buildSelectorModal');
+        const overlay = document.getElementById('overlay');
+
+        function toggleFilter(id) {
+            const el = document.getElementById(id);
+            el.style.display = el.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function selectFilterBrand(brand) {
+            activeBrandFilter = brand;
+            filterBuildList();
+        }
+
+        function openBuildSelector(type) {
+            currentPickingType = type;
+            const titleMap = { cpu: 'Chọn Vi Xử Lý (CPU)', vga: 'Chọn Thuận Card Đồ Họa (VGA)', ram: 'Chọn Thanh RAM', mb: 'Chọn Bo Mạch Chủ (Mainboard)' };
+            document.getElementById('buildSelectorTitle').innerText = titleMap[type];
+            
+            activeBrandFilter = '';
+            currentAvailItems = productsData.filter(p => p.category === type);
+            renderBuildList(currentAvailItems);
+
+            document.getElementById('buildSearchInput').value = '';
+            overlay.classList.add('active');
+            buildModal.classList.add('active');
+        }
+
+        function renderBuildList(list) {
+            const listElem = document.getElementById('buildSelectorList');
+            if(list.length === 0) {
+                listElem.innerHTML = '<div style="padding:20px; text-align:center;">Không tìm thấy linh kiện...</div>';
+                return;
+            }
+            listElem.innerHTML = list.map(item => `
+                <div class="selector-item">
+                    <img src="${item.img}">
+                    <div class="sel-info">
+                        <div class="sel-name">${item.name}</div>
+                        <div class="sel-price">Giá: ${formatCurrency(item.price)}</div>
+                        <div class="sel-code">Mã sản phẩm: SP_${item.id.toString().padStart(4, '0')}</div>
+                    </div>
+                    <button class="sel-btn" onclick="selectBuildItem(${item.id})">Chọn</button>
+                </div>
+            `).join('');
+        }
+
+        function filterBuildList() {
+            const keyword = document.getElementById('buildSearchInput').value.toLowerCase();
+            let filtered = currentAvailItems.filter(p => p.name.toLowerCase().includes(keyword));
+            if (activeBrandFilter) {
+                filtered = filtered.filter(p => p.brand === activeBrandFilter);
+            }
+            renderBuildList(filtered);
+        }
+
+        function closeBuildSelector() {
+            buildModal.classList.remove('active');
+            if(!document.getElementById('cartSidebar').classList.contains('active') && !document.getElementById('authModal').classList.contains('active')) {
+                overlay.classList.remove('active');
+            }
+        }
+
+        function selectBuildItem(id) {
+            const item = productsData.find(p => p.id === id);
+            buildPCSelection[currentPickingType] = item;
+            document.getElementById(`selected-${currentPickingType}`).innerText = item.name;
+            closeBuildSelector();
+            updateBuildTotal();
+        }
+
+        function updateBuildTotal() {
+            let total = 0;
+            Object.values(buildPCSelection).forEach(item => { if (item) total += item.price; });
+            document.querySelector('.build-total').innerText = formatCurrency(total);
+        }
+
+        document.getElementById('addAllBuildToCartBtn').addEventListener('click', () => {
+            let addedAny = false;
+            Object.values(buildPCSelection).forEach(item => {
+                if (item) { addToCart(item.id); addedAny = true; }
+            });
+            if (addedAny) alert("Thành công! Hãy mở Giỏ Hàng góc phải để thanh toán.");
+            else alert("Vui lòng chọn linh kiện!");
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Cửa Hàng - TMĐT Khủng</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="overlay" id="overlay"></div>
+
+    <header>
+        <div class="tier-1"><div class="container tier-1-inner"><div class="tier-1-left"><a href="#"><i class='bx bx-map'></i> Hệ thống Showroom</a></div></div></div>
+        <div class="tier-2">
+            <div class="container tier-2-inner">
+                <div class="logo-box"><a href="index.html" class="logo">HUNGLEPC<span class="text-red">SHOP</span></a></div>
+                <div class="search-wrapper"><div class="search-box-2"><input type="text" id="searchInputHD" placeholder="Nhập tên linh kiện..."><button><i class='bx bx-search'></i></button></div></div>
+                <div class="header-icons">
+                    <div class="h-icon-box" id="authBtn"><i class='bx bx-user-circle'></i><div class="text"><span>Đăng nhập</span><b>Tài khoản</b></div></div>
+                    <div class="h-icon-box cart-wrap" id="cartOpenBtn"><i class='bx bx-cart'></i><span class="cart-badge" id="cartCount">0</span><div class="text"><span>Giỏ hàng</span><b>Của bạn</b></div></div>
+                </div>
+            </div>
+        </div>
+        <div class="tier-3">
+            <div class="container tier-3-inner">
+                <div class="mega-menu-wrapper"><div class="nav-menu-btn"><i class='bx bx-menu'></i> DANH MỤC SẢN PHẨM</div></div>
+                <ul class="top-nav-links"><li><a href="products.html"><i class='bx bxs-hot'></i> XẢ KHO</a></li><li><a href="build-pc.html">XÂY DỰNG PC</a></li></ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Modals -->
+    <div class="cart-sidebar" id="cartSidebar"><div class="cart-header"><h2>GIỎ HÀNG</h2><button id="cartCloseBtn" class="modal-close"><i class='bx bx-x'></i></button></div><div class="cart-items" id="cartItemsContainer"></div><div class="cart-footer"><div class="cart-total"><span>Tổng cộng:</span><span id="cartTotalPrice">0đ</span></div><button class="btn-primary" id="checkoutBtnMain">Thanh Toán Ngay</button></div></div>
+    <div class="modal" id="authModal"><button class="modal-close"><i class='bx bx-x'></i></button><h2>Đăng Nhập Khách Hàng</h2><form id="loginForm"><div class="form-group"><label>Tên đăng nhập</label><input type="text" id="loginUser" required></div><button type="submit" class="btn-primary" style="background:var(--primary-blue);">Đăng Nhập</button></form></div>
+
+    <main class="main-wrapper container">
+        <div class="page-title-box">
+            <div>
+                <h2>LỌC TÌM KIẾM</h2>
+                <div class="tab-pills" id="categoryFilters" style="margin-top:10px;">
+                    <div class="t-pill active" data-filter="all">Tất Cả</div>
+                    <div class="t-pill" data-filter="cpu">CPU</div>
+                    <div class="t-pill" data-filter="vga">VGA</div>
+                    <div class="t-pill" data-filter="ram">RAM</div>
+                    <div class="t-pill" data-filter="mb">Mainboard</div>
+                </div>
+            </div>
+            <div>
+                <select id="sortSelect" style="padding:10px; border:1px solid var(--border-color); border-radius:4px;">
+                    <option value="default">Mặc định</option>
+                    <option value="price-asc">Giá: Thấp -> Cao</option>
+                    <option value="price-desc">Giá: Cao -> Thấp</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="product-grid" id="mainGrid" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));">
+            <!-- Items via JS -->
+        </div>
+    </main>
+
+    <div class="floating-action-group"><div class="float-btn btn-zalo">Z</div></div>
+
+    <footer><div class="container"><p>&copy; 2026 HUNGLEPCSHOP.</p></div></footer>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let currentFilter = 'all';
+            const grid = document.getElementById('mainGrid');
+            const searchI = document.getElementById('searchInputHD');
+            const sortSelect = document.getElementById('sortSelect');
+            const pills = document.querySelectorAll('.t-pill');
+            
+            const params = new URLSearchParams(window.location.search);
+            if(params.get('k')) searchI.value = params.get('k');
+
+            function render() {
+                let list = [...productsData];
+                const keyword = searchI.value.toLowerCase();
+                if(currentFilter !== 'all') list = list.filter(p => p.category === currentFilter);
+                if(keyword) list = list.filter(p => p.name.toLowerCase().includes(keyword));
+
+                const sortV = sortSelect.value;
+                if(sortV === 'price-asc') list.sort((a,b) => a.price - b.price);
+                else if(sortV === 'price-desc') list.sort((a,b) => b.price - a.price);
+
+                if(list.length === 0) grid.innerHTML = '<p class="w-100 text-center">Không có sản phẩm thích hợp.</p>';
+                else grid.innerHTML = list.map(p => generateProductCard(p, p.isFlashSale)).join('');
+            }
+
+            searchI.addEventListener('input', render);
+            sortSelect.addEventListener('change', render);
+            pills.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    pills.forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    currentFilter = e.target.dataset.filter;
+                    render();
+                });
+            });
+            render();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Sản Phẩm Chi Tiết</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="overlay" id="overlay"></div>
+
+    <header>
+        <div class="tier-1"><div class="container tier-1-inner"><div class="tier-1-left"><a href="#"><i class='bx bx-map'></i> Hệ thống Showroom</a></div></div></div>
+        <div class="tier-2">
+            <div class="container tier-2-inner">
+                <div class="logo-box"><a href="index.html" class="logo">HUNGLEPC<span class="text-red">SHOP</span></a></div>
+                <div class="search-wrapper"><div class="search-box-2"><input type="text" id="searchInputHD" placeholder="Nhập tên linh kiện..."><button><i class='bx bx-search'></i></button></div></div>
+                <div class="header-icons">
+                    <div class="h-icon-box" id="authBtn"><i class='bx bx-user-circle'></i><div class="text"><span>Đăng nhập</span><b>Tài khoản</b></div></div>
+                    <div class="h-icon-box cart-wrap" id="cartOpenBtn"><i class='bx bx-cart'></i><span class="cart-badge" id="cartCount">0</span><div class="text"><span>Giỏ hàng</span><b>Của bạn</b></div></div>
+                </div>
+            </div>
+        </div>
+        <div class="tier-3">
+            <div class="container tier-3-inner">
+                <div class="mega-menu-wrapper"><div class="nav-menu-btn"><i class='bx bx-menu'></i> DANH MỤC SẢN PHẨM</div></div>
+                <ul class="top-nav-links"><li><a href="products.html"><i class='bx bxs-hot'></i> XẢ KHO</a></li><li><a href="build-pc.html">XÂY DỰNG PC</a></li></ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="cart-sidebar" id="cartSidebar"><div class="cart-header"><h2>GIỎ HÀNG</h2><button id="cartCloseBtn" class="modal-close"><i class='bx bx-x'></i></button></div><div class="cart-items" id="cartItemsContainer"></div><div class="cart-footer"><div class="cart-total"><span>Tổng cộng:</span><span id="cartTotalPrice">0đ</span></div><button class="btn-primary" id="checkoutBtnMain">Thanh Toán Ngay</button></div></div>
+    <div class="modal" id="authModal"><button class="modal-close"><i class='bx bx-x'></i></button><h2>Đăng Nhập Khách Hàng</h2><form id="loginForm"><div class="form-group"><label>Tên đăng nhập</label><input type="text" id="loginUser" required></div><button type="submit" class="btn-primary" style="background:var(--primary-blue);">Đăng Nhập</button></form></div>
+
+    <main class="main-wrapper container">
+        <div class="detail-bread">
+            <span>Trang chủ</span> > <span>Linh Kiện Khác</span> > <b id="breadName">Sản phẩm</b>
+        </div>
+        <div id="detailContainer"></div>
+    </main>
+
+    <div class="floating-action-group"><div class="float-btn btn-zalo">Z</div></div>
+    <footer><div class="container"><p>&copy; 2026 HUNGLEPCSHOP.</p></div></footer>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const id = parseInt(params.get('id'));
+            const container = document.getElementById('detailContainer');
+            
+            if(!id) { container.innerHTML = '<h2>Sản phẩm không tồn tại!</h2>'; return; }
+            const product = productsData.find(p => p.id === id);
+            if(!product) { container.innerHTML = '<h2>Sản phẩm không tồn tại!</h2>'; return; }
+
+            document.getElementById('breadName').innerText = product.name;
+
+            container.innerHTML = `
+                <div class="detail-main-box">
+                    <div class="detail-left">
+                        <div class="d-img-main"><img src="${product.img}"></div>
+                        <div style="margin-top:20px;">
+                            ${Object.entries(product.specs).map(([k,v]) => `<div style="border-bottom:1px solid #eee; padding:8px 0;"><b>${k}</b>: ${v}</div>`).join('')}
+                        </div>
+                    </div>
+                    <div class="detail-right">
+                        <h1 class="d-title">${product.name}</h1>
+                        <div class="d-meta"><span>Bảo hành: 36 Tháng</span> <span>Tình trạng: <b style="color:green;">Còn hàng</b></span></div>
+                        <div class="d-price-block">
+                            <div class="d-price">${formatCurrency(product.price)}</div>
+                            <div style="color:var(--text-muted); text-decoration:line-through; font-size:14px;">Giá bán lẻ: ${formatCurrency(product.price * 1.15)}</div>
+                        </div>
+                        <div class="d-gift-box">
+                            <div class="g-head"><i class='bx bx-gift'></i> KHUYẾN MÃI TẶNG KÈM</div>
+                            <div class="g-body">
+                                <ul>
+                                    <li>Tặng bộ tản nhiệt cao cấp khi build PC.</li>
+                                    <li>Giảm thêm 5% khi thanh toán qua ví điện tử.</li>
+                                    <li>Miễn phí vận chuyển nội thành.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="d-hotline-text">Gọi ngay 1900 1234 để có giá tốt nhất!</div>
+                        <div class="d-actions">
+                            <button class="btn-buy-now" onclick="addToCart(${product.id}); alert('Nhấn Giỏ hàng trên Menu để Thanh Toán')">MUA NGAY<span>Giao tận nơi hoặc nhận tại cửa hàng</span></button>
+                            <button class="btn-buy-installment" onclick="alert('Đang bảo trì cổng trả góp')">MUA TRẢ GÓP<span>Duyệt hồ sơ Online 5 phút</span></button>
+                        </div>
+                        <button class="btn-primary" style="margin-top:10px; background:white; color:var(--primary-blue); border:1px solid var(--primary-blue);" onclick="addToCart(${product.id})">Thêm vào giỏ hàng</button>
+                    </div>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>

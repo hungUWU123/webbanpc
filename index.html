@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Chủ - TMĐT Khủng</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="overlay" id="overlay"></div>
+
+    <header>
+        <div class="tier-1">
+            <div class="container tier-1-inner">
+                <div class="tier-1-left">
+                    <a href="#"><i class='bx bx-map'></i> Hệ thống Showroom</a>
+                    <a href="#"><i class='bx bx-check-shield'></i> Tổng đài CSKH: 1900 1234</a>
+                </div>
+                <div class="tier-1-right">
+                    <a href="#">Tin công nghệ</a>
+                    <a href="#">Khuyến mãi</a>
+                    <a href="#">Tuyển dụng</a>
+                </div>
+            </div>
+        </div>
+        <div class="tier-2">
+            <div class="container tier-2-inner">
+                <div class="logo-box"><a href="index.html" class="logo">HUNGLEPC<span class="text-red">SHOP</span></a></div>
+                <div class="search-wrapper">
+                    <div class="search-box-2">
+                        <input type="text" id="searchInputHD" placeholder="Nhập tên linh kiện, vi xử lý, card đồ họa...">
+                        <button><i class='bx bx-search'></i></button>
+                    </div>
+                    <div class="search-tags">
+                        <span>Core i9</span><span>RTX 5090</span><span>RAM 64GB</span><span>PC Gaming</span>
+                    </div>
+                </div>
+                <div class="header-icons">
+                    <div class="h-icon-box"><i class='bx bx-phone-call'></i><div class="text"><span>Gọi mua hàng</span><b>1900 1234</b></div></div>
+                    <div class="h-icon-box" id="authBtn"><i class='bx bx-user-circle'></i><div class="text"><span>Đăng nhập</span><b>Tài khoản</b></div></div>
+                    <div class="h-icon-box cart-wrap" id="cartOpenBtn">
+                        <i class='bx bx-cart'></i><span class="cart-badge" id="cartCount">0</span>
+                        <div class="text"><span>Giỏ hàng</span><b>Của bạn</b></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tier-3">
+            <div class="container tier-3-inner">
+                <div class="mega-menu-wrapper">
+                    <div class="nav-menu-btn"><i class='bx bx-menu'></i> DANH MỤC SẢN PHẨM</div>
+                </div>
+                <ul class="top-nav-links">
+                    <li><a href="products.html"><i class='bx bxs-hot'></i> XẢ KHO GIẢM SỐC</a></li>
+                    <li><a href="build-pc.html"><i class='bx bx-wrench'></i> XÂY DỰNG CẤU HÌNH PC</a></li>
+                    <li><a href="products.html">LINH KIỆN MÁY TÍNH</a></li>
+                    <li><a href="products.html">MÀN HÌNH MÁY TÍNH</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header"><h2>GIỎ HÀNG</h2><button id="cartCloseBtn" style="border:none;background:none;font-size:24px;cursor:pointer;"><i class='bx bx-x'></i></button></div>
+        <div class="cart-items" id="cartItemsContainer"></div>
+        <div class="cart-footer"><div class="cart-total"><span>Tổng cộng:</span><span id="cartTotalPrice">0đ</span></div><button class="btn-primary" id="checkoutBtnMain">Thanh Toán Ngay</button></div>
+    </div>
+    
+    <div class="modal" id="authModal">
+        <button class="modal-close"><i class='bx bx-x'></i></button>
+        <h2>Đăng Nhập Khách Hàng</h2>
+        <form id="loginForm">
+            <div class="form-group"><label>Tên đăng nhập / Số điện thoại</label><input type="text" id="loginUser" required></div>
+            <div class="form-group"><label>Mật khẩu</label><input type="password" required></div>
+            <button type="submit" class="btn-primary" style="background:var(--primary-blue);">Đăng Nhập</button>
+        </form>
+    </div>
+
+    <main class="main-wrapper container">
+        <div class="hero-grid">
+            <div class="mega-menu-wrapper">
+                <div class="hero-mega-menu">
+                    <a href="products.html"><i class='bx bx-chip'></i> Linh Kiện PC
+                        <div class="megamenu-panel">
+                            <div class="panel-col">
+                                <h4>Vi Xử Lý - CPU</h4>
+                                <ul><li><a href="#">CPU Intel Core i9</a></li><li><a href="#">CPU Intel Core i7</a></li><li><a href="#">CPU AMD Ryzen 9</a></li><li><a href="#">CPU AMD Ryzen 5</a></li></ul>
+                            </div>
+                            <div class="panel-col">
+                                <h4>Bo Mạch Chủ - Mainboard</h4>
+                                <ul><li><a href="#">Mainboard ASUS</a></li><li><a href="#">Mainboard GIGABYTE</a></li><li><a href="#">Mainboard MSI</a></li><li><a href="#">Chipset Z790</a></li></ul>
+                            </div>
+                            <div class="panel-col">
+                                <h4>Card Đồ Họa - VGA</h4>
+                                <ul><li><a href="#">NVIDIA RTX 50 Series</a></li><li><a href="#">NVIDIA RTX 40 Series</a></li><li><a href="#">AMD Radeon RX</a></li></ul>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="products.html"><i class='bx bx-laptop'></i> Laptop Gaming</a>
+                    <a href="products.html"><i class='bx bx-desktop'></i> Màn Hình Máy Tính</a>
+                    <a href="products.html"><i class='bx bx-headphone'></i> Phụ Kiện & Gaming Gear</a>
+                    <a href="products.html"><i class='bx bx-hdd'></i> Thiết Bị Lưu Trữ</a>
+                    <a href="products.html"><i class='bx bx-server'></i> PC Đồ Họa Chuẩn Cấu Hình</a>
+                    <a href="products.html"><i class='bx bx-joystick'></i> Console & Thiết bị Mạng</a>
+                </div>
+            </div>
+            
+            <div class="hero-slider">
+                <div class="slider-main">
+                    <!-- Static Fallback Slider -->
+                    <img src="assets/images/hero.png" alt="slider">
+                </div>
+                <div class="hero-sub-banners">
+                    <div class="sub-banner"><img src="assets/images/gpu.png" alt="sub" style="object-fit:cover; filter: brightness(0.8);"></div>
+                    <div class="sub-banner"><img src="assets/images/cpu.png" alt="sub" style="object-fit:cover; filter: brightness(0.8);"></div>
+                </div>
+            </div>
+        </div>
+
+        <section class="flash-sale-block">
+            <div class="flash-sale-header">
+                <i class='bx bxs-zap'></i> FLASH SALE <div class="countdown-box"><div class="cd-item" id="cd-hrs">05</div>:<div class="cd-item" id="cd-mins">30</div>:<div class="cd-item" id="cd-secs">12</div></div>
+            </div>
+            <div class="product-grid" id="flashSaleGrid">
+                <!-- Render FlashSale via JS -->
+            </div>
+        </section>
+
+        <section class="section-block">
+            <div class="section-header-row">
+                <h2>LINH KIỆN PC NỔI BẬT</h2>
+                <div class="tab-pills">
+                    <div class="t-pill active">Vi Xử Lý (CPU)</div>
+                    <div class="t-pill">Card Màn Hình (VGA)</div>
+                    <div class="t-pill">Khác</div>
+                </div>
+            </div>
+            <div class="product-grid" id="normalGrid">
+                <!-- Render normal items -->
+            </div>
+        </section>
+    </main>
+
+    <!-- FLOATING CTA -->
+    <div class="floating-action-group">
+        <div class="float-btn btn-zalo">Z</div>
+        <div class="float-btn btn-phone"><i class='bx bxs-phone-call'></i></div>
+    </div>
+
+    <footer><div class="container"><p>&copy; 2026 HUNGLEPCSHOP. Clone Giao Diện Chuẩn Bán Lẻ VN.</p></div></footer>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const fsGrid = document.getElementById('flashSaleGrid');
+            const nGrid = document.getElementById('normalGrid');
+            
+            // Render Flash Sale
+            if(fsGrid) {
+                const fsItems = productsData.filter(p => p.isFlashSale).slice(0, 5); // 5 items
+                fsGrid.innerHTML = fsItems.map(p => generateProductCard(p, true)).join('');
+            }
+            // Render Normal
+            if(nGrid) {
+                const nItems = productsData.filter(p => !p.isFlashSale).slice(0, 10);
+                nGrid.innerHTML = nItems.map(p => generateProductCard(p, false)).join('');
+            }
+
+            // Search Trigger
+            const searchI = document.getElementById('searchInputHD');
+            searchI.addEventListener('keypress', (e) => {
+                if(e.key === 'Enter') window.location.href = 'products.html?k=' + searchI.value;
+            });
+        });
+    </script>
+</body>
+</html>
